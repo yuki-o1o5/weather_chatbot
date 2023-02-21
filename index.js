@@ -14,11 +14,11 @@ const configuration = {
 
 const askQuestion = async () => {
   rl.question(
-    "Welcome to our chatbot! Would you like to know current weather or forecasts? Please type 1 or 2. (1.current weather/ 2.forecasts): ",
+    "Would you like to know the current weather or the weather forecasts? Please type 1 or 2. (1.current / 2.forecasts): ",
     (numberAnswer) => {
       if (numberAnswer == "1") {
         rl.question(
-          "Please type the city name which you want to know : ",
+          "Please type the city name which you would like to know : ",
           (cityAnswer) => {
             let { apiKey, unit } = configuration;
             let modifyAnswer = cityAnswer.toLowerCase();
@@ -29,11 +29,11 @@ const askQuestion = async () => {
         );
       } else if (numberAnswer == "2") {
         rl.question(
-          "Would you like to know today's forecast or next five days forecasts? Please type 1 or 2. (1.today's forecast/ 2.next five days forecasts): ",
+          "Would you like to know the weather for tomorrow or next five days? Please type 1 or 2. (1.tomorrow/ 2.next five days): ",
           (numberAnswer) => {
             if (numberAnswer == "1") {
               rl.question(
-                "Please type the city name which you want to know : ",
+                "Please type the city name which you would like to know : ",
                 (cityAnswer) => {
                   let { apiKey, unit } = configuration;
                   let modifyAnswer = cityAnswer.toLowerCase();
@@ -44,7 +44,7 @@ const askQuestion = async () => {
               );
             } else if (numberAnswer == "2") {
               rl.question(
-                "Please type the city name which you want to know : ",
+                "Please type the city name which you would like to know : ",
                 (cityAnswer) => {
                   let { apiKey, unit } = configuration;
                   let modifyAnswer = cityAnswer.toLowerCase();
@@ -84,23 +84,19 @@ const getCurrentWeather = async (answer, apiKey, unit) => {
 
 const getHoutlyTodaysForecast = async (answer, apiKey, unit) => {
   try {
+    let today = new Date();
+    today.setDate(today.getDate() + 1);
+    let year = today.getFullYear();
+    let month = String(today.getMonth() + 1);
+    let dayTommorow = String(today.getDate());
+    month = month.length == 1 ? month.padStart("2", "0") : month;
+    dayTommorow =
+      dayTommorow.length == 1 ? dayTommorow.padStart("2", "0") : dayTommorow;
+    let todaysDtTxt = `${year}-${month}-${dayTommorow}`;
+
     let res = await axios.get(
       `https://api.openweathermap.org/data/2.5/forecast?q=${answer}&appid=${apiKey}&units=${unit}`
     );
-    const monthArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    const today = new Date();
-    const year = today.getUTCFullYear();
-    let month = monthArray[today.getUTCMonth()];
-    let splitMonth = month.toString().split("");
-    let newMonth = 0;
-    if (splitMonth.length < 2) {
-      newMonth = `0${splitMonth}`;
-    } else {
-      newMonth = month;
-    }
-    const date = today.getUTCDate();
-    let todaysDtTxt = `${year}-${newMonth}-${date}`;
-
     console.log("========================");
     res.data.list.forEach((element) => {
       if (element.dt_txt.includes(todaysDtTxt)) {

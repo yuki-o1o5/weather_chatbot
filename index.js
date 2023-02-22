@@ -23,12 +23,8 @@ const askQuestion = async () => {
             let { apiKey, unit } = configuration;
             let modifyAnswer = cityAnswer.toLowerCase();
             let encodeAnswer = encodeURIComponent(modifyAnswer);
-            let currentWeather = await getCurrentWeather(
-              encodeAnswer,
-              apiKey,
-              unit
-            );
-            currentWeather;
+            await getCurrentWeather(encodeAnswer, apiKey, unit);
+
             rl.close();
           }
         );
@@ -43,12 +39,7 @@ const askQuestion = async () => {
                   let { apiKey, unit } = configuration;
                   let modifyAnswer = cityAnswer.toLowerCase();
                   let encodeAnswer = encodeURIComponent(modifyAnswer);
-                  let HoutlyTodaysForecast = getHoutlyTodaysForecast(
-                    encodeAnswer,
-                    apiKey,
-                    unit
-                  );
-                  HoutlyTodaysForecast;
+                  await getHoutlyTodaysForecast(encodeAnswer, apiKey, unit);
                   rl.close();
                 }
               );
@@ -59,13 +50,12 @@ const askQuestion = async () => {
                   let { apiKey, unit } = configuration;
                   let modifyAnswer = cityAnswer.toLowerCase();
                   let encodeAnswer = encodeURIComponent(modifyAnswer);
-                  let HoutlyNextFiveDaysForecast =
-                    await getHoutlyNextFiveDaysForecast(
-                      encodeAnswer,
-                      apiKey,
-                      unit
-                    );
-                  HoutlyNextFiveDaysForecast;
+                  await getHoutlyNextFiveDaysForecast(
+                    encodeAnswer,
+                    apiKey,
+                    unit
+                  );
+
                   rl.close();
                 }
               );

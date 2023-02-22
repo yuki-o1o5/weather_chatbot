@@ -19,11 +19,16 @@ const askQuestion = async () => {
       if (numberAnswer == "1") {
         rl.question(
           "Please type the city name which you would like to know : ",
-          (cityAnswer) => {
+          async (cityAnswer) => {
             let { apiKey, unit } = configuration;
             let modifyAnswer = cityAnswer.toLowerCase();
             let encodeAnswer = encodeURIComponent(modifyAnswer);
-            getCurrentWeather(encodeAnswer, apiKey, unit);
+            let currentWeather = await getCurrentWeather(
+              encodeAnswer,
+              apiKey,
+              unit
+            );
+            currentWeather;
             rl.close();
           }
         );
@@ -34,22 +39,33 @@ const askQuestion = async () => {
             if (numberAnswer == "1") {
               rl.question(
                 "Please type the city name which you would like to know : ",
-                (cityAnswer) => {
+                async (cityAnswer) => {
                   let { apiKey, unit } = configuration;
                   let modifyAnswer = cityAnswer.toLowerCase();
                   let encodeAnswer = encodeURIComponent(modifyAnswer);
-                  getHoutlyTodaysForecast(encodeAnswer, apiKey, unit);
+                  let HoutlyTodaysForecast = getHoutlyTodaysForecast(
+                    encodeAnswer,
+                    apiKey,
+                    unit
+                  );
+                  HoutlyTodaysForecast;
                   rl.close();
                 }
               );
             } else if (numberAnswer == "2") {
               rl.question(
                 "Please type the city name which you would like to know : ",
-                (cityAnswer) => {
+                async (cityAnswer) => {
                   let { apiKey, unit } = configuration;
                   let modifyAnswer = cityAnswer.toLowerCase();
                   let encodeAnswer = encodeURIComponent(modifyAnswer);
-                  getHoutlyNextFiveDaysForecast(encodeAnswer, apiKey, unit);
+                  let HoutlyNextFiveDaysForecast =
+                    await getHoutlyNextFiveDaysForecast(
+                      encodeAnswer,
+                      apiKey,
+                      unit
+                    );
+                  HoutlyNextFiveDaysForecast;
                   rl.close();
                 }
               );

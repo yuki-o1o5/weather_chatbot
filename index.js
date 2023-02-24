@@ -20,11 +20,10 @@ const askQuestion = async () => {
         rl.question(
           "Please type the city name which you would like to know : ",
           async (cityAnswer) => {
-            let { apiKey, unit } = configuration;
-            let modifyAnswer = cityAnswer.toLowerCase();
-            let encodeAnswer = encodeURIComponent(modifyAnswer);
+            const { apiKey, unit } = configuration;
+            const modifyAnswer = cityAnswer.toLowerCase();
+            const encodeAnswer = encodeURIComponent(modifyAnswer);
             await getCurrentWeather(encodeAnswer, apiKey, unit);
-
             rl.close();
           }
         );
@@ -36,10 +35,10 @@ const askQuestion = async () => {
               rl.question(
                 "Please type the city name which you would like to know : ",
                 async (cityAnswer) => {
-                  let { apiKey, unit } = configuration;
-                  let modifyAnswer = cityAnswer.toLowerCase();
-                  let encodeAnswer = encodeURIComponent(modifyAnswer);
-                  await getHoutlyTodaysForecast(encodeAnswer, apiKey, unit);
+                  const { apiKey, unit } = configuration;
+                  const modifyAnswer = cityAnswer.toLowerCase();
+                  const encodeAnswer = encodeURIComponent(modifyAnswer);
+                  await getHoutlyTomorrowForecast(encodeAnswer, apiKey, unit);
                   rl.close();
                 }
               );
@@ -47,9 +46,9 @@ const askQuestion = async () => {
               rl.question(
                 "Please type the city name which you would like to know : ",
                 async (cityAnswer) => {
-                  let { apiKey, unit } = configuration;
-                  let modifyAnswer = cityAnswer.toLowerCase();
-                  let encodeAnswer = encodeURIComponent(modifyAnswer);
+                  const { apiKey, unit } = configuration;
+                  const modifyAnswer = cityAnswer.toLowerCase();
+                  const encodeAnswer = encodeURIComponent(modifyAnswer);
                   await getHoutlyNextFiveDaysForecast(
                     encodeAnswer,
                     apiKey,
@@ -88,19 +87,19 @@ const getCurrentWeather = async (answer, apiKey, unit) => {
   }
 };
 
-const getHoutlyTodaysForecast = async (answer, apiKey, unit) => {
+const getHoutlyTomorrowForecast = async (answer, apiKey, unit) => {
   try {
-    let today = new Date();
+    const today = new Date();
     today.setDate(today.getDate() + 1);
-    let year = today.getFullYear();
+    const year = today.getFullYear();
     let month = String(today.getMonth() + 1);
     let dayTommorow = String(today.getDate());
     month = month.length == 1 ? month.padStart("2", "0") : month;
     dayTommorow =
       dayTommorow.length == 1 ? dayTommorow.padStart("2", "0") : dayTommorow;
-    let todaysDtTxt = `${year}-${month}-${dayTommorow}`;
+    const todaysDtTxt = `${year}-${month}-${dayTommorow}`;
 
-    let res = await axios.get(
+    const res = await axios.get(
       `https://api.openweathermap.org/data/2.5/forecast?q=${answer}&appid=${apiKey}&units=${unit}`
     );
     console.log("========================");
@@ -121,7 +120,7 @@ const getHoutlyTodaysForecast = async (answer, apiKey, unit) => {
 
 const getHoutlyNextFiveDaysForecast = async (answer, apiKey, unit) => {
   try {
-    let res = await axios.get(
+    const res = await axios.get(
       `https://api.openweathermap.org/data/2.5/forecast?q=${answer}&appid=${apiKey}&units=${unit}`
     );
     console.log("========================");
